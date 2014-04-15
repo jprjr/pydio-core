@@ -29,7 +29,7 @@ defined('AJXP_EXEC') or die( 'Access not allowed');
 class AJXP_VarsFilter
 {
     /**
-     * Filter the very basic keywords from the XML  : AJXP_USER, AJXP_INSTALL_PATH, AJXP_DATA_PATH
+     * Filter the very basic keywords from the XML  : AJXP_USER, AJXP_INSTALL_PATH, AJXP_DATA_PATH, AJXP_GROUP_PATH, ENV_*
      * Calls the vars.filter hooks.
      * @static
      * @param $value
@@ -73,6 +73,15 @@ class AJXP_VarsFilter
         }
         if (is_string($value) && strpos($value, "AJXP_DATA_PATH") !== false) {
             $value = str_replace("AJXP_DATA_PATH", AJXP_DATA_PATH, $value);
+        }
+        if (is_string($value) && strncmp($value, "ENV_", strlen("ENV_") === 0) {
+            $env_var = getenv(substr($value, strlen("ENV_")));
+            if($env_var !== false) {
+                $value = $env_var;
+            }
+            else {
+                $value = "";
+            }
         }
         $tab = array(&$value);
         AJXP_Controller::applyIncludeHook("vars.filter", $tab);
