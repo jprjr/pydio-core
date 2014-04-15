@@ -74,7 +74,7 @@ class AJXP_VarsFilter
         if (is_string($value) && strpos($value, "AJXP_DATA_PATH") !== false) {
             $value = str_replace("AJXP_DATA_PATH", AJXP_DATA_PATH, $value);
         }
-        if (is_string($value) && strncmp($value, "ENV_", strlen("ENV_") === 0) {
+        if (is_string($value) && strncmp($value, "ENV_", strlen("ENV_")) === 0) {
             $env_var = getenv(substr($value, strlen("ENV_")));
             if($env_var !== false) {
                 $value = $env_var;
